@@ -1,0 +1,28 @@
+import { Module } from "@nestjs/common";
+import { ClientsModule, Transport } from "@nestjs/microservices";
+import { CLIENTS, CoreModule } from "vtonomy";
+import { SearchService } from "../../usecase";
+import { CART_HANDLER } from "./core";
+import { CartController } from "./infras/cart.transport";
+
+@Module({
+    imports: [
+        CoreModule,
+        ClientsModule.register([
+            {
+                name: CLIENTS.Auth_Client,
+                transport: Transport.RMQ,
+                options: {
+                    urls: ["amqp://vtonomy:123456@localhost:5672"],
+                    queue: "auth_queue",
+                    queueOptions: {
+                        durable: false,
+                    },
+                },
+            },
+        ]),
+    ],
+    controllers: [CartController],
+    providers: [SearchService, ...CART_HANDLER],
+})
+export class CartModule {}
