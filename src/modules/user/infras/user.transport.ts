@@ -42,8 +42,7 @@ export class UserController {
     @UseGuards(JwtAuthGuard)
     @Get("/user/me")
     async me(@Req() req) {
-        console.log("🚀 ~ UserController ~ me ~ req:", req.user);
-        return req.user;
+        return new ResponseDTO(req.user);
     }
 
     @Get("/user/:id")
