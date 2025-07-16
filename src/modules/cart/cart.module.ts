@@ -16,7 +16,7 @@ import { CartController } from "./infras/cart.transport";
                     urls: [process.env.RABBITMQ_URL ?? 'amqp://vtonomy:123456@localhost:5672'],
                     queue: "auth_queue",
                     queueOptions: {
-                        durable: false,
+                        durable: true,
                     },
                 },
             },

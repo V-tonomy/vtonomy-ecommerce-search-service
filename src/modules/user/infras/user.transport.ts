@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { Ctx, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
 
