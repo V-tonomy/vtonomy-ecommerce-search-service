@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
+import { CqrsModule } from "@nestjs/cqrs";
 import { ClientsModule, Transport } from "@nestjs/microservices";
-import { CLIENTS, CoreModule } from "vtonomy";
+import { CLIENTS } from "vtonomy";
 import { SearchService } from "../../usecase";
 import { CART_HANDLER } from "./core";
 import { CartController } from "./infras/cart.transport";
 
 @Module({
     imports: [
-        CoreModule,
+        CqrsModule,
         ClientsModule.register([
             {
                 name: CLIENTS.Auth_Client,

@@ -9,7 +9,7 @@ import {
     Cart_Item_Deleted,
     Cart_Item_Updated,
     Cart_Updated,
-    JwtAuthGuard,
+    JwtGuard,
     PagingRequestDTO,
     PagingResponseDTO,
     ResponseDTO,
@@ -71,14 +71,14 @@ export class CartController {
         await this.commandBus.execute(DeleteCartItemByIdCommand.create(id));
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtGuard)
     @Get("/cart/:id")
     async getCartById(@Param("id") id: string) {
         const res = await this.queryBus.execute(SearchCartByIdQuery.create(id));
         return new ResponseDTO(res);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtGuard)
     @Post("/cart")
     async searchCart(@Body() props: CartSearchDTO, @Query() paging: PagingRequestDTO) {
         const res = await this.queryBus.execute(SearchCartQuery.create(props, paging));
@@ -88,14 +88,14 @@ export class CartController {
         return new PagingResponseDTO(data, total);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtGuard)
     @Get("/cart-item/:id")
     async getCarItemtById(@Param("id") id: string) {
         const res = await this.queryBus.execute(SearchCartItemByIdQuery.create(id));
         return new ResponseDTO(res);
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtGuard)
     @Post("/cart-item")
     async searchCartItem(@Body() props: CartItemSearchDTO, @Query() paging: PagingRequestDTO) {
         const res = await this.queryBus.execute(SearchCartItemQuery.create(props, paging));

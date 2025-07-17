@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { Ctx, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
 
 import {
-    JwtAuthGuard,
+    JwtGuard,
     PagingRequestDTO,
     PagingResponseDTO,
     ResponseDTO,
@@ -39,7 +39,7 @@ export class UserController {
         await this.commandBus.execute(DeleteUserByIdCommand.create(id));
     }
 
-    @UseGuards(JwtAuthGuard)
+    @UseGuards(JwtGuard)
     @Get("/user/me")
     async me(@Req() req) {
         return new ResponseDTO(req.user);
