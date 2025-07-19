@@ -1,10 +1,30 @@
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { PORTS, QueueConfig } from "vtonomy";
 import { SearchModule } from "./search.module";
 
 async function bootstrap() {
     const app = await NestFactory.create(SearchModule);
+
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true,
+            whitelist: true,
+        })
+    );
+
+    const config = new DocumentBuilder()
+        .setTitle("Search Service")
+        .setDescription("API for managing search service in Vtonomy")
+        .setVersion("1.0")
+        .addTag("Search")
+        .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup("api-docs", app, document);
+
     app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.RMQ,
         options: {

@@ -13,16 +13,20 @@ export class SearchProductQuery implements IQuery {
     }
 
     public generateQuery(): Record<string, any> {
-        if (!this.props || Object.keys(this.props).length === 0) {
-            return { match_all: {} };
-        }
-
-        const { name, id } = this.props;
+        const { name, id, categoryId, description, toPrice, fromPrice } = this.props;
 
         const builder = new ElasticQueryBuilder({
             must: {
-                name: name,
-                id: id,
+                id,
+                name,
+                categoryId,
+                description,
+            },
+            range: {
+                price: {
+                    gte: fromPrice,
+                    lte: toPrice,
+                },
             },
             sort: [{ field: "createdAt", order: "desc" }],
             from: this.paging.page - 1,
@@ -30,7 +34,6 @@ export class SearchProductQuery implements IQuery {
         });
 
         const query = builder.build();
-        // console.log(query.bool)
         return query;
     }
 
