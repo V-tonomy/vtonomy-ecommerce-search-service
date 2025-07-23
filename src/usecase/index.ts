@@ -10,6 +10,8 @@ import {
 export class SearchService implements OnModuleInit, OnModuleDestroy {
     private elasticsearchService: Client;
 
+    static extractSources = (res: any) => res?.hits?.hits?.map((item) => item._source) ?? [];
+
     async onModuleInit() {
         try {
             this.elasticsearchService = await new Client({
@@ -84,6 +86,42 @@ export class SearchService implements OnModuleInit, OnModuleDestroy {
                 ...document,
             },
         });
+    }
+
+    async indexMany(index: string, documents: any[]): Promise<void> {
+        if (!this.elasticsearchService) {
+            return Promise.reject(new Error("Elasticsearch is not connected"));
+        }
+
+        if (!documents || documents.length === 0) return;
+
+        const bulkOps = documents.flatMap((doc) => [
+            {
+                index: {
+                    _index: index,
+                    _id: doc.id,
+                },
+            },
+            {
+                id: doc.id,
+                ...doc,
+            },
+        ]);
+
+        const result = await this.elasticsearchService.bulk({
+            refresh: true,
+            body: bulkOps,
+        });
+
+        if (result.errors) {
+            const erroredDocuments = result.items.filter((item: any) => {
+                const action = item.index || item.create;
+                return action?.error;
+            });
+
+            console.error("Some documents failed to index:", erroredDocuments);
+            throw new Error("Bulk indexing failed for some documents");
+        }
     }
 
     async update(index: string, id: string, document: any): Promise<void> {

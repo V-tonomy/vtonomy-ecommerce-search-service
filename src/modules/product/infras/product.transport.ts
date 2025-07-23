@@ -3,6 +3,7 @@ import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { Ctx, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
 
 import {
+    Image_Created,
     PagingRequestDTO,
     PagingResponseDTO,
     Product_Created,
@@ -51,9 +52,7 @@ export class ProductController {
     @Post("/product")
     async searchProduct(@Body() props: ProductSearchDTO, @Query() paging: PagingRequestDTO) {
         const res = await this.queryBus.execute(SearchProductQuery.create(props, paging));
-        const data = res.hits?.hits?.map((item) => item._source);
-        const total = res.hits.total;
 
-        return new PagingResponseDTO(data, total);
+        return new PagingResponseDTO(res.data, res.total);
     }
 }
