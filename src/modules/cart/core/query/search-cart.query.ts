@@ -1,6 +1,6 @@
 import { IQuery } from "@nestjs/cqrs";
 import { ElasticQueryBuilder } from "src/domain";
-import { PagingRequestDTO } from "vtonomy";
+import { PagingRequestDTO } from 'vtonomy';
 import { CartItemSearchDTO, CartSearchDTO } from "../dto";
 
 export class SearchCartQuery implements IQuery {

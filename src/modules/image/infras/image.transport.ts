@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Query } from "@nestjs/common";
 import { CommandBus, QueryBus } from "@nestjs/cqrs";
 import { Ctx, MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
 
-import { Image_Created, PagingRequestDTO, PagingResponseDTO, ResponseDTO } from "vtonomy";
+import { Image_Created, PagingRequestDTO, PagingResponseDTO, ResponseDTO } from 'vtonomy';
 import { IndexImageCommand } from "../core/command";
 import { ImageSearchDTO } from "../core/dto";
 import { SearchImageByIdQuery, SearchImageQuery } from "../core/query";

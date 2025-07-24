@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { CqrsModule } from "@nestjs/cqrs";
-import { RabbitmqModule } from "vtonomy";
+import { RabbitmqModule } from 'vtonomy';
 import { SearchService } from "../../usecase";
 import { USER_HANDLER } from "./core";
 import { UserController } from "./infras/user.transport";

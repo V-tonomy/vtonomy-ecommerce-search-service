@@ -2,7 +2,7 @@ import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
-import { PORTS, QueueConfig } from "vtonomy";
+import { PORTS, QueueConfig } from 'vtonomy';
 import { SearchModule } from "./search.module";
 
 async function bootstrap() {

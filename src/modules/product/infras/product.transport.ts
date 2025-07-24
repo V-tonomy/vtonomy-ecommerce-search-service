@@ -10,7 +10,7 @@ import {
     Product_Deleted,
     Product_Updated,
     ResponseDTO,
-} from "vtonomy";
+} from 'vtonomy';
 import {
     DeleteProductByIdCommand,
     IndexProductCommand,

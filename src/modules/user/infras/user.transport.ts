@@ -10,7 +10,7 @@ import {
     User_Created,
     User_Deleted,
     User_Updated,
-} from "vtonomy";
+} from 'vtonomy';
 import { DeleteUserByIdCommand, IndexUserCommand, UpdateUserByIdCommand } from "../core/command";
 import { UserSearchDTO } from "../core/dto";
 import { SearchUserByIdQuery, SearchUserQuery } from "../core/query";
